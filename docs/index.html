@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Debloat Android TV &amp; Google TV, Remove Ads Without Root | tv-debloat</title>
+<meta name="description" content="Free, open-source tool to debloat Android TV and Google TV over Wi-Fi: remove ads, bloatware and telemetry without root and without installing anything on the TV. Works on TCL, Xiaomi, Hisense, Sony and more.">
+<link rel="canonical" href="https://aryamansi17.github.io/tv-debloat/">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b0d10">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="tv-debloat: Debloat Android TV & Google TV, remove ads without root">
+<meta property="og:description" content="Remove ads, bloatware and telemetry from Android TV and Google TV over Wi-Fi. No root, nothing installed on the TV, fully reversible.">
+<meta property="og:url" content="https://aryamansi17.github.io/tv-debloat/">
+<meta property="og:site_name" content="tv-debloat">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tv-debloat: Debloat Android TV & Google TV without root">
+<meta name="twitter:description" content="Remove ads, bloatware and telemetry from Android TV over Wi-Fi. Nothing installed on the TV, fully reversible.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='5' width='28' height='18' rx='3' fill='%2334d399'/%3E%3Crect x='11' y='25' width='10' height='2' rx='1' fill='%2334d399'/%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "tv-debloat",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "macOS, Android TV, Google TV",
+      "description": "Debloat Android TV and Google TV over ADB: remove ads, bloatware and telemetry without root and without installing anything on the TV.",
+      "url": "https://aryamansi17.github.io/tv-debloat/",
+      "downloadUrl": "https://github.com/AryamanSi17/tv-debloat",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@type": "Person", "name": "Aryaman Sinha", "url": "https://github.com/AryamanSi17" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to debloat an Android TV without root",
+      "step": [
+        { "@type": "HowToStep", "name": "Turn on USB debugging", "text": "On the TV open Settings, System, About, press OK on Build 7 times, then turn on USB debugging in Developer options." },
+        { "@type": "HowToStep", "name": "Clone tv-debloat", "text": "Clone the tv-debloat repository and open Claude Code inside it, on the same Wi-Fi as the TV." },
+        { "@type": "HowToStep", "name": "Paste the prompt", "text": "Paste the prompt. Claude finds the TV, backs it up, asks which apps you use and disables the bloat." }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Does debloating Android TV need root?", "acceptedAnswer": { "@type": "Answer", "text": "No. tv-debloat uses ADB over Wi-Fi and pm disable-user, which works on stock, unrooted TVs." } },
+        { "@type": "Question", "name": "Does it install anything on my TV?", "acceptedAnswer": { "@type": "Answer", "text": "No. All commands run from your computer. Nothing is added to the TV; apps are only switched off." } },
+        { "@type": "Question", "name": "Is it safe? Can I undo it?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Apps are disabled, never uninstalled, the home screen app is never touched, and one command restores the backup. A factory reset also re-enables all apps." } },
+        { "@type": "Question", "name": "How do I remove ads from the Google TV home screen?", "acceptedAnswer": { "@type": "Answer", "text": "Disabling the manufacturer's promo apps and Google's auto-installer removes most of them. For Google TV's own recommendation rows, turn on Apps only mode in Settings, Accounts & Sign In; it also turns off some Google features." } },
+        { "@type": "Question", "name": "Why is my Android TV slow?", "acceptedAnswer": { "@type": "Answer", "text": "Low-memory TVs, often with 1.5 to 2 GB of RAM, run many manufacturer services in the background. Disabling them frees memory for the apps you actually use." } },
+        { "@type": "Question", "name": "Which TVs does it work on?", "acceptedAnswer": { "@type": "Answer", "text": "Android TV and Google TV devices including TCL, Xiaomi, Redmi, Mi TV, Hisense, Sony Bravia, OnePlus, Realme, Nvidia Shield and Chromecast with Google TV. Not Samsung, LG or Amazon Fire TV." } }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+  :root {
+    --bg: #f7f8f9; --surface: #ffffff; --text: #111418; --muted: #5b6470;
+    --line: #e2e5e9; --accent: #059669; --accent-ink: #ffffff; --code: #0f1418; --code-text: #d7fbe8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b0d10; --surface: #13171c; --text: #eef1f4; --muted: #9aa4b0;
+      --line: #222830; --accent: #34d399; --accent-ink: #06261a; --code: #070a0c; --code-text: #c9f7df;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  a { color: var(--accent); }
+  header.top { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
+  .brand { font-weight: 700; letter-spacing: -0.01em; color: var(--text); text-decoration: none; }
+  .brand span { color: var(--accent); }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 20px; font-size: 15px; }
+  nav a:hover { color: var(--text); }
+
+  .hero { padding: 56px 0 40px; }
+  .pill { display: inline-block; font-size: 13px; color: var(--muted); border: 1px solid var(--line);
+          border-radius: 999px; padding: 4px 12px; margin-bottom: 20px; }
+  h1 { font-size: clamp(34px, 5.5vw, 56px); line-height: 1.08; letter-spacing: -0.03em; margin: 0 0 18px; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lead { font-size: clamp(17px, 2.2vw, 20px); color: var(--muted); max-width: 680px; margin: 0 0 28px; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 12px 20px; border-radius: 10px; font-weight: 600;
+         text-decoration: none; border: 1px solid var(--line); color: var(--text); background: var(--surface); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .brands { margin-top: 28px; font-size: 14px; color: var(--muted); }
+
+  section { padding: 48px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: clamp(24px, 3.4vw, 32px); letter-spacing: -0.02em; margin: 0 0 24px; }
+  h3 { font-size: 17px; margin: 0 0 6px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  ol.steps { list-style: none; padding: 0; margin: 0 0 24px; counter-reset: s; display: grid; gap: 14px; }
+  ol.steps li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start; }
+  ol.steps li::before { content: counter(s); width: 32px; height: 32px; border-radius: 50%; display: grid;
+         place-items: center; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 15px; }
+  ol.steps p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+  .code { position: relative; background: var(--code); color: var(--code-text); border-radius: 12px;
+          padding: 18px 20px; font: 14px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace;
+          white-space: pre-wrap; word-break: break-word; margin: 0 0 16px; }
+  .copy { position: absolute; top: 10px; right: 10px; font: 600 12px system-ui, sans-serif; padding: 6px 10px;
+          border-radius: 8px; border: 1px solid #2c3540; background: #1a2129; color: #d7e0ea; cursor: pointer; }
+  .copy:focus-visible, .btn:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 600; }
+  details p { color: var(--muted); margin: 10px 0 0; font-size: 15px; }
+
+  footer { padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+
+  @media (max-width: 600px) {
+    nav a:not(:last-child) { display: none; }
+    .hero { padding-top: 32px; }
+    th, td { padding: 10px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="./">tv<span>-</span>debloat</a>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/AryamanSi17/tv-debloat">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <span class="pill">Free &amp; open source · MIT</span>
+      <h1>Debloat Android TV &amp; Google TV. <em>Remove ads without root.</em></h1>
+      <p class="lead">Make a slow, ad-filled smart TV fast and clean again. tv-debloat switches off
+        manufacturer bloatware, ad services and telemetry over Wi-Fi. Nothing is installed on the TV,
+        and every change can be undone.</p>
+      <div class="cta">
+        <a class="btn primary" href="#how">Get started</a>
+        <a class="btn" href="https://github.com/AryamanSi17/tv-debloat">View on GitHub</a>
+      </div>
+      <p class="brands">Works on TCL · Xiaomi / Redmi / Mi TV · Hisense · Sony Bravia · OnePlus · Realme · Nvidia Shield · Chromecast with Google TV</p>
+    </div>
+
+    <section id="features" aria-labelledby="features-h">
+      <h2 id="features-h">Why tv-debloat</h2>
+      <div class="grid">
+        <div class="card"><h3>Nothing installed on the TV</h3><p>Everything runs from your computer over ADB. The TV only has apps switched off.</p></div>
+        <div class="card"><h3>No root needed</h3><p>Uses <code>pm disable-user</code> on stock, unrooted TVs. Apps are disabled, never uninstalled.</p></div>
+        <div class="card"><h3>Removes bloat and ads</h3><p>Manufacturer telemetry, promo pop-ups, content tabs and silent auto-installers.</p></div>
+        <div class="card"><h3>Safe by default</h3><p>The TV's home screen app is always skipped, so the Home button keeps working.</p></div>
+        <div class="card"><h3>Backup &amp; one-command restore</h3><p>Snapshot the TV before any change and roll back to it any time.</p></div>
+        <div class="card"><h3>Laptop remote</h3><p>Drive the TV from your keyboard and type passwords from your laptop.</p></div>
+      </div>
+    </section>
+
+    <section id="how" aria-labelledby="how-h">
+      <h2 id="how-h">How to debloat your Android TV</h2>
+      <ol class="steps">
+        <li><div><h3>Turn on USB debugging</h3><p>On the TV: Settings → System → About → press OK on <strong>Build</strong> 7 times → back → Developer options → turn on <strong>USB debugging</strong>. Keep it on the same Wi-Fi as your computer.</p></div></li>
+        <li><div><h3>Clone and open Claude Code</h3><p>Run these on your computer:</p></div></li>
+      </ol>
+      <pre class="code"><button class="copy" type="button">Copy</button>git clone https://github.com/AryamanSi17/tv-debloat.git
+cd tv-debloat
+claude</pre>
+      <ol class="steps" start="3" style="counter-reset: s 2">
+        <li><div><h3>Paste this prompt</h3><p>Claude finds your TV, backs it up, asks which apps you use, debloats it and checks every step with screenshots. Accept "Allow USB debugging?" on the TV when it appears.</p></div></li>
+      </ol>
+      <pre class="code"><button class="copy" type="button">Copy</button>My Android TV is slow and full of ads. Use the tools in this repo to find it on my Wi-Fi, connect
+over ADB, and snapshot it with tools/backup.sh before changing anything. Then debloat it: disable
+the manufacturer's ads, telemetry and junk with tools/disable.sh (reversibly, never uninstall),
+asking me first about apps and features I might use, and save the list under examples/&lt;my TV model&gt;/.
+Don't install anything on the TV and never disable the home screen app. Check every step with
+screenshots from the TV, test that Home and my apps still work, and tell me how to roll back.
+
+Note: tools/tv.py talks ADB without the adb binary (macOS blocks it).</pre>
+      <p>Prefer doing it by hand? The <a href="https://github.com/AryamanSi17/tv-debloat#manual-setup-macos">manual steps</a> are four commands.</p>
+    </section>
+
+    <section id="tvs" aria-labelledby="tvs-h">
+      <h2 id="tvs-h">Supported TVs</h2>
+      <table>
+        <thead><tr><th scope="col">Works</th><th scope="col">Doesn't work</th></tr></thead>
+        <tbody><tr>
+          <td>Android TV and Google TV: TCL, Xiaomi / Redmi / Mi, Hisense, Sony, OnePlus, Realme, Nvidia Shield, Chromecast with Google TV</td>
+          <td>Samsung (Tizen), LG (webOS), Amazon Fire TV</td>
+        </tr></tbody>
+      </table>
+    </section>
+
+    <section id="faq" aria-labelledby="faq-h">
+      <h2 id="faq-h">Frequently asked questions</h2>
+      <details><summary>Does debloating Android TV need root?</summary><p>No. tv-debloat uses ADB over Wi-Fi and <code>pm disable-user</code>, which works on stock, unrooted TVs.</p></details>
+      <details><summary>Does it install anything on my TV?</summary><p>No. All commands run from your computer. Nothing is added to the TV; apps are only switched off.</p></details>
+      <details><summary>Is it safe? Can I undo it?</summary><p>Yes. Apps are disabled, never uninstalled, the home screen app is never touched, and one command restores the backup. A factory reset also re-enables all apps.</p></details>
+      <details><summary>How do I remove ads from the Google TV home screen?</summary><p>Disabling the manufacturer's promo apps and Google's auto-installer removes most of them. For Google TV's own recommendation rows, turn on <strong>Apps only mode</strong> (Settings → Accounts &amp; Sign In → your account); it also turns off some Google features.</p></details>
+      <details><summary>Why is my Android TV slow?</summary><p>Low-memory TVs, often with 1.5 to 2 GB of RAM, run many manufacturer services in the background. Disabling them frees memory for the apps you actually use.</p></details>
+      <details><summary>Which TVs does it work on?</summary><p>Android TV and Google TV devices including TCL, Xiaomi, Redmi, Mi TV, Hisense, Sony Bravia, OnePlus, Realme, Nvidia Shield and Chromecast with Google TV. Not Samsung, LG or Amazon Fire TV.</p></details>
+    </section>
+  </main>
+
+  <footer>
+    tv-debloat by <a href="https://github.com/AryamanSi17">Aryaman Sinha</a> · MIT licence ·
+    <a href="https://github.com/AryamanSi17/tv-debloat">Source on GitHub</a>
+  </footer>
+</div>
+<script>
+  document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => {
+    const text = b.parentElement.textContent.replace(b.textContent, '').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      b.textContent = 'Copied';
+      setTimeout(() => { b.textContent = 'Copy'; }, 1500);
+    });
+  }));
+</script>
+</body>
+</html>
