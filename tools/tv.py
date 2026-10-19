@@ -5,11 +5,8 @@
     tv.py 'pm list packages'                 one shell command
     tv.py --batch < cmds.txt                 one command per line, same connection
     tv.py --pull /sdcard/x.png x.png
-    tv.py --push-b64 local.apk /data/local/tmp/x.apk   chunked base64 upload with md5 check
     tv.py --shot out.png                     screenshot from the TV
 """
-import base64
-import hashlib
 import os
 import sys
 
@@ -39,21 +36,6 @@ def connect():
     return dev
 
 
-def push_b64(dev, local, remote, chunk=48_000):
-    data = open(local, "rb").read()
-    enc = base64.b64encode(data).decode()
-    tmp = remote + ".b64"
-    dev.shell(f"rm -f {tmp} {remote}")
-    for i in range(0, len(enc), chunk):
-        dev.shell(f"echo -n '{enc[i:i + chunk]}' >> {tmp}")
-    dev.shell(f"base64 -d {tmp} > {remote} && rm -f {tmp}")
-    remote_md5 = dev.shell(f"md5sum {remote}").split()[0]
-    local_md5 = hashlib.md5(data).hexdigest()
-    if remote_md5 != local_md5:
-        sys.exit(f"md5 mismatch: {remote_md5} != {local_md5}")
-    print(f"pushed {local} -> {remote} ({len(data)} bytes, md5 ok)")
-
-
 def main():
     a = sys.argv[1:]
     dev = connect()
@@ -68,8 +50,6 @@ def main():
                 print(f"$ {line}\n{dev.shell(line, read_timeout_s=120).rstrip()}")
     elif a[0] == "--pull":
         dev.pull(a[1], a[2])
-    elif a[0] == "--push-b64":
-        push_b64(dev, a[1], a[2])
     elif a[0] == "--shot":
         dev.shell("screencap -p /sdcard/_shot.png")
         dev.pull("/sdcard/_shot.png", a[1])

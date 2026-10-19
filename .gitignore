@@ -2,11 +2,8 @@
 tools/venv/
 tools/adbkey/
 tools/.tv_host
-launcher/debug.keystore
 backup/
 shots/
 
-# Build output
-launcher/build/
 .DS_Store
 __pycache__/

@@ -8,14 +8,12 @@ Then run Claude Code inside this repo and paste (Android TV / Google TV only, no
 ```text
 My Android TV is slow and full of ads. Use the tools in this repo to find it on my Wi-Fi, connect
 over ADB, and snapshot it with tools/backup.sh before changing anything. Then debloat it: disable
-the manufacturer's ads, telemetry and junk (reversibly, never uninstall), asking me first about apps
-and features I might use, and save the list under examples/<my TV model>/. Then build and install
-the launcher with a dock of my favourite apps. Check every step with screenshots from the TV, test
-the Home button from inside an app, and tell me how to roll back.
+the manufacturer's ads, telemetry and junk with tools/disable.sh (reversibly, never uninstall),
+asking me first about apps and features I might use, and save the list under examples/<my TV model>/.
+Don't install anything on the TV and never disable the home screen app. Check every step with
+screenshots from the TV, test that Home and my apps still work, and tell me how to roll back.
 
-Notes: tools/tv.py talks ADB without the adb binary (macOS blocks it); on Google TV also disable
-com.google.android.tungsten.setupwraith or it hijacks the Home button.
+Note: tools/tv.py talks ADB without the adb binary (macOS blocks it).
 ```
 
-Once it's installed: long-press OK on any app to rearrange the dock, and use `tools/remote.sh` to
-drive the TV from your keyboard.
+Afterwards, `tools/remote.sh` drives the TV from your keyboard.
